@@ -10,9 +10,30 @@
                     display: flex;
                 }
 
+                .art {
+                    float: left;
+                    width: 33.33%;
+                }
+
+                .played-before-art {
+                    float: left;
+                    width: 15%;
+                }
+
+                .played-before-list {
+                    width: 100%;
+                    display: relative;
+                }
+
+                .played-before {
+                    margin-bottom: 55px;
+                    margin-left: 10%;
+                }
+
                 .container {
-                    border-radius: 5px;
-                    padding: 10px 10px 10px 0px;
+                    background-color: #121212;
+                    border-radius: 10px;
+                    padding: 10px 10px
                 }
 
                 .playing {
@@ -28,28 +49,29 @@
                     color: #ff1616;
                 }
 
-                .art {
-                    float: left;
-                    width: 27%;
-                    margin-left: -5px;
+                .artist {
+                    font-weight: bold;
+                    font-size: 24px;
+                    color: #fff;
+                    text-align: left;
+                    margin-top: 5px;
+                    flex-shrink: 1;
                 }
 
-                .text {
-                    width: 71%;
+                .played-before-artist {
+                    font-size: 20px;
                 }
 
                 .song {
-                    font-size: 24px;
-                    color: #666;
-                    text-align: center;
-                    margin-top: 3px;
-                }
-
-                .artist {
                     font-size: 20px;
                     color: #b3b3b3;
-                    text-align: center;
-                    margin-bottom: 5px;
+                    text-align: left;
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                }
+
+                .played-before-song {
+                    font-size: 16px;
                 }
 
                 .logo {
@@ -59,27 +81,30 @@
 
                 .cover {
                     border-radius: 5px;
-                    height: 100px;
-                    width: 100px;
+                    margin-top: 9px;
+                }
+
+                .played-before-cover {
+                    width:-100%;
+                    height:auto;
                 }
 
                 #bars {
                     height: 30px;
-                    bottom: 23px;
                     margin: -20px 0 0 0px;
                     position: absolute;
                     width: 40px;
                 }
 
                 .bar {
-                    background: #1DB954cc;
+                    background: #53b14f;
                     bottom: 1px;
                     height: 3px;
                     position: absolute;
                     width: 3px;
                     animation: sound 0ms -800ms linear infinite alternate;
                 }
-                
+
                 @keyframes sound {
                     0% {
                         opacity: .35;
@@ -88,7 +113,7 @@
 
                     100% {
                         opacity: 1;
-                        height: 15px;
+                        height: 28px;
                     }
                 }
 
@@ -112,10 +137,27 @@
                     </div>
                 </div>
 
-                {% else %}
-                    <div class="playing not-play">Nothing playing on Spotify</div>
-                {% endif %}
+            {% else %}
+                <div class="playing not-play">Nothing playing on Spotify</div>
+            {% endif %}
             </div>
+            {% if before_played|length > 0 %}
+                <div class="played-before-list">
+                {% for item in before_played %}
+                    <div class="played-before">
+                        <div class="played-before-art">
+                            <center>
+                                <img src="data:image/png;base64, {{item.img}}" class="cover played-before-cover" />
+                            </center>
+                        </div>
+                        <div class="text">
+                            <div class="artist played-before-artist">{{item.artist}}</div>
+                            <div class="song played-before-song">{{item.songName}}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
 
         </div>
     </foreignObject>
